@@ -137,10 +137,6 @@
         "type": "bool",
         "value": "[parameters('peer')]"
     },
-    "hubID": {
-        "type": "string",
-        "value": "[variables('hubID')]"
-    },
     "spokeID": {
         "type": "string",
         "value": "[variables('spokeID')]"
