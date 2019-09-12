@@ -33,8 +33,7 @@
                 { "addressPrefix": "10.102.0.0/24", "name": "GatewaySubnet" },
                 { "addressPrefix": "10.102.1.0/24", "name": "OnPrem-vnet-subnet1" },
                 { "addressPrefix": "10.102.2.0/24", "name": "OnPrem-vnet-subnet2" }
-            ],
-            "vpnGwName": "OnPrem-vpn-gw"
+            ]
         },
         "spokes": [
             {

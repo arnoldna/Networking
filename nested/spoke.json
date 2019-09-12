@@ -12,7 +12,7 @@
         "hub": {
             "type": "object",
             "defaultValue": {
-                "resourceGroup": "westeurope",
+                "resourceGroup": "TD-Network",
                 "vnet": {
                     "name": "hub"
                 }
