@@ -11,12 +11,8 @@
         }
     },
     "variables": {
-        "vnetUri": "[uri(deployment().properties.templateLink.uri, 'nested/vnet.json')]",
-        "spokeUri": "[uri(deployment().properties.templateLink.uri, 'nested/spoke.json')]",
-        "avsetUri": "[uri(deployment().properties.templateLink.uri, 'nested/avset.json')]",
-        "vpngwUri": "[uri(deployment().properties.templateLink.uri, 'nested/vpngw.json')]",
-        "vmUri": "[uri(deployment().properties.templateLink.uri, 'nested/vm.json')]",
-        "csrUri": "[uri(deployment().properties.templateLink.uri, 'nested/ciscoCSR.json')]",
+        "vnetUri": "https://raw.githubusercontent.com/richeney/arm/master/nestedTemplates/vnet-hub.json",
+        "spokeUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/spoke.json?token=ACTEYPI3RVD3NQK7YFTOLMS5PJTVY",
         "hub": {
             "resourceGroup": "VDC-Hub",
             "vnet": {
@@ -24,11 +20,8 @@
                 "addressPrefixes": [  "10.101.0.0/16" ]
             },
             "subnets": [ 
-                { "addressPrefix": "10.101.0.0/24", "name": "GatewaySubnet" },
-                { "addressPrefix": "10.101.1.0/24", "name": "Hub-vnet-subnet1" },
-                { "addressPrefix": "10.101.2.0/24", "name": "Hub-vnet-subnet2" }
-            ],
-            "vpnGwName": "Hub-vpn-gw"
+                { "addressPrefix": "10.101.1.0/24", "name": "Hub-vnet-subnet1" }
+            ]
         },
         "onprem": {
             "resourceGroup": "VDC-OnPrem",
@@ -66,10 +59,7 @@
                     { "addressPrefix": "10.2.2.0/24", "name": "Spoke2-vnet-subnet2" }
                 ]
             }
-        ],
-        "nva": {
-            "resourceGroup": "VDC-NVA"
-        }
+        ]
     },
     "resources": [
         {
@@ -90,7 +80,7 @@
                     }
                 }
             }
-        },        
+        },
         {
             "comments": "Create OnPrem vNet",
             "name": "Deploy-OnPrem-vNet",
@@ -140,83 +130,6 @@
                     }
                 }
             }
-        },
-        {
-            "comments": "Create VPN Gateway in OnPrem-vnet",
-            "name": "Deploy-OnPrem-vpnGateway",
-            "condition": "[parameters('createVPNGateway')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "resourceGroup": "[variables('onprem').resourceGroup]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vpnGwUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vnetName": {
-                        "value": "[variables('onprem').vnet.name]"
-                    },
-                    "vpnGwName": {
-                        "value": "[variables('onprem').vpnGwName]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "Deploy-OnPrem-vNet"
-            ]
-        },
-        {
-            "comments": "Create single VM in the on-premises vNet",
-            "name": "Deploy-OnPrem-VM",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "resourceGroup": "[variables('onprem').resourceGroup]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vmUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vNetName": {
-                        "value": "[variables('onprem').vnet.name]"
-                    },
-                    "subnetName": {
-                        "value": "[variables('onprem').subnets[1].name]"
-                    },
-                    "vmName": {
-                        "value": "OnPrem-vm"
-                    },
-                    "script": {
-                        "value": "StandardOSUpgrade.sh"
-                    },
-                    "pip?": {
-                        "value": true
-                    }
-                }
-            },
-            "dependsOn": [
-                "Deploy-OnPrem-vNet"
-            ]
-        },
-        {
-            "comments": "Create Cisco CSR 1000v in the NVA vNet",
-            "name": "Deploy-Cisco-CSR-1000v",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "resourceGroup": "[variables('nva').resourceGroup]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('csrUri')]",
-                    "contentVersion": "1.0.0.0"
-                }
-            },
-            "dependsOn": [
-                "Deploy-Hub-vNet"
-            ]
         }
     ]
 }
