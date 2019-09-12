@@ -10,7 +10,7 @@
         "hub": {
             "type": "object",
             "defaultValue": {
-            "resourceGroup": "core",
+            "resourceGroup": "TD-Network",
             "vnet": {
                 "name": "core"
             }
