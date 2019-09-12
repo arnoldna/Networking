@@ -14,7 +14,7 @@
         "vnetUri": "https://raw.githubusercontent.com/richeney/arm/master/nestedTemplates/vnet-hub.json",
         "spokeUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/spoke.json?token=ACTEYPI3RVD3NQK7YFTOLMS5PJTVY",
         "hub": {
-            "resourceGroup": "VDC-Hub",
+            "resourceGroup": "TD-Network",
             "vnet": {
                 "name": "Hub-vnet",
                 "addressPrefixes": [  "10.101.0.0/16" ]
@@ -38,7 +38,7 @@
         },
         "spokes": [
             {
-                "resourceGroup": "VDC-Spoke1",
+                "resourceGroup": "TD-Prod",
                 "vnet": {
                     "name": "Spoke1-vnet",
                     "addressPrefixes": [  "10.1.0.0/16" ]
@@ -49,7 +49,7 @@
                 ]
             },
             {
-                "resourceGroup": "VDC-Spoke2",
+                "resourceGroup": "TD-Prod",
                 "vnet": {
                     "name": "Spoke2-vnet",
                     "addressPrefixes": [  "10.2.0.0/16" ]
