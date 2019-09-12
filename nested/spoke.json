@@ -12,8 +12,7 @@
             "defaultValue": {
             "resourceGroup": "TD-Network",
             "vnet": {
-                "name": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core",
-                "vnetResourceId": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core"
+                "name": "core"
             }
             },
             "metadata": {
@@ -134,17 +133,21 @@
         }
     ],
     "outputs": {
-    "peer": {
-        "type": "bool",
-        "value": "[parameters('peer')]"
-    },
-    "spokeID": {
-        "type": "string",
-        "value": "[variables('spokeID')]"
-    },
-    "subnets": {
-        "type": "array",
-        "value": "[variables('subnets')]"
-    }
+        "peer": {
+            "type": "bool",
+            "value": "[parameters('peer')]"
+        },
+        "hubID": {
+            "type": "string",
+            "value": "[variables('hubID')]"
+        },
+        "spokeID": {
+            "type": "string",
+            "value": "[variables('spokeID')]"
+        },
+        "subnets": {
+            "type": "array",
+            "value": "[variables('subnets')]"
+        }
     }
 }
