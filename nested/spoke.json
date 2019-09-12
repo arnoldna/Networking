@@ -21,11 +21,12 @@
         },
         "hubTest": {
             "type": "array",
-            "defaultValue": {
-            "resourceGroup": "TD-Network",
-            "vnet": 
-                {"name": "core", "ID": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core"}
-            },
+            "defaultValue": [
+                {
+                    "vnet": 
+                        {"name": "core", "ID": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core"}
+                }
+            ],
             "metadata": {
                 "description": "Info for an existing hub or core vNet.  Required if peer==true.  Assumed to be within the same subscription."
             }
