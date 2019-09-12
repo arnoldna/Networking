@@ -12,7 +12,8 @@
             "defaultValue": {
             "resourceGroup": "TD-Network",
             "vnet": {
-                "name": "core"
+                "name": "core",
+                "vnetResourceId": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core"
             }
             },
             "metadata": {
