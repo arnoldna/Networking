@@ -49,7 +49,6 @@
     "variables": {
 
         "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'nested/spoke.json')]",
-        "hubDeploymentNameOrignal": "[concat('deployHub-', parameters('hub').vnet.name)]",
         "hubDeploymentName": "[parameters('hub').vnetResourceId]"
     },
     "resources": [
