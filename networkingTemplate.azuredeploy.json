@@ -25,8 +25,7 @@
             "defaultValue": [
                 {
                     "resourceGroup": "Prod-Network",
-                    "location": "westus2",
-                    "vnet": { "name": "spoke1", "addressPrefixes": [ "10.1.0.0/16"  ] },
+                    "vnet": { "name": "spoke1", "addressPrefixes": [ "10.1.0.0/16"  ], "location": "westus2" },
                     "subnets": [
                         { "name": "subnet1", "addressPrefix": "10.1.32.64/27" },
                         { "name": "subnet2", "addressPrefix": "10.1.32.96/27" }
@@ -34,8 +33,7 @@
                 },
                 {
                     "resourceGroup": "Prod-Network",
-                    "location": "centralus",
-                    "vnet": { "name": "spoke2", "addressPrefixes": [ "10.2.0.0/16" ] },
+                    "vnet": { "name": "spoke2", "addressPrefixes": [ "10.2.0.0/16" ], "location": "centralus" },
                     "subnets": [
                         { "name": "subnet1", "addressPrefix": "10.2.0.0/27" },
                         { "name": "subnet2", "addressPrefix": "10.2.1.0/27" }
