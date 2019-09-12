@@ -45,7 +45,6 @@
                 "count": "[length(parameters('spoke').subnets)]",
                 "input": {
                     "name": "[parameters('spoke').subnets[copyIndex('subnets')].name]",
-                    "location": "[parameters('spoke').subnets[copyIndex('subnets')].location]",
                     "addressPrefix": "[parameters('spoke').subnets[copyIndex('subnets')].addressPrefix]",
                     "id": "[concat(resourceId('Microsoft.Network/virtualNetworks/', parameters('spoke').vnet.name), '/subnets/', parameters('spoke').subnets[copyIndex('subnets')].name)]"
                 }
