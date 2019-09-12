@@ -6,7 +6,7 @@
             "type": "object",
             "defaultValue": {
                 "resourceGroup": "TD-Network",
-                "vnet": { "name": "core", "addressPrefixes": [ "10.0.0.0/16" ] },
+                "vnet": { "name": "core", "addressPrefixes": [ "10.0.0.0/8" ] },
                 "subnets": [
                     { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
                     { "name": "subnet1", "addressPrefix": "10.0.1.0/24" },
@@ -35,7 +35,7 @@
                     "resourceGroup": "Prod-Network",
                     "vnet": { "name": "spoke2", "addressPrefixes": [ "10.243.32.0/20" ] },
                     "subnets": [
-                        { "name": "subnet1", "addressPrefix": "10.243.32.96/27" },
+                        { "name": "subnet1", "addressPrefix": "10.243.32.64/27" },
                         { "name": "subnet2", "addressPrefix": "10.243.32.96/27" }
                     ]
                 }
