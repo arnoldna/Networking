@@ -7,18 +7,6 @@
             "allowedValues": [ true, false ],
             "defaultValue": false
         },
-        "hub": {
-            "type": "object",
-            "defaultValue": {
-            "resourceGroup": "TD-Network",
-            "vnet": {
-                "name": "core"
-            }
-            },
-            "metadata": {
-                "description": "Info for an existing hub or core vNet.  Required if peer==true.  Assumed to be within the same subscription."
-            }
-        },
         "hubTest": {
             "type": "array",
             "defaultValue": [
