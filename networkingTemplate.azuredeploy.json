@@ -58,7 +58,7 @@
                 "peer": {
                     "value": true
                 },
-                "hub": {
+                "hubtest": {
                     "value": "[parameters('hubtest')]"
                 },
                 "spoke": {
