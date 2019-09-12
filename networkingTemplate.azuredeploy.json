@@ -46,7 +46,7 @@
         }
     },
     "variables": {
-        "hubUrl": "[uri(deployment().properties.templateLink.uri, 'nested/hub.json')]",
+
         "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'nested/spoke.json')]",
         "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnet.name)]"
     },
