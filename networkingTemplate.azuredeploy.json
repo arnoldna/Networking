@@ -35,8 +35,8 @@
                     "resourceGroup": "Prod-Network",
                     "vnet": { "name": "spoke2", "addressPrefixes": [ "10.2.0.0/16" ] },
                     "subnets": [
-                        { "name": "subnet1", "addressPrefix": "10.2.0.0/16" },
-                        { "name": "subnet2", "addressPrefix": "10.2.1.0/16" }
+                        { "name": "subnet1", "addressPrefix": "10.2.0.0/27" },
+                        { "name": "subnet2", "addressPrefix": "10.2.1.0/27" }
                     ]
                 }
             ],
