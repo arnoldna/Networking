@@ -25,18 +25,18 @@
             "defaultValue": [
                 {
                     "resourceGroup": "Prod-Network",
-                    "vnet": { "name": "spoke1", "addressPrefixes": [ "10.1.0.0/16"  ] },
+                    "vnet": { "name": "spoke1", "addressPrefixes": [ "10.242.32.0/20"  ] },
                     "subnets": [
-                        { "name": "subnet1", "addressPrefix": "10.1.0.0/24" },
-                        { "name": "subnet2", "addressPrefix": "10.1.1.0/24" }
+                        { "name": "subnet1", "addressPrefix": "10.242.32.64/27" },
+                        { "name": "subnet2", "addressPrefix": "10.242.32.96/27" }
                     ]
                 },
                 {
                     "resourceGroup": "Prod-Network",
-                    "vnet": { "name": "spoke2", "addressPrefixes": [ "10.2.0.0/16" ] },
+                    "vnet": { "name": "spoke2", "addressPrefixes": [ "10.243.32.0/20" ] },
                     "subnets": [
-                        { "name": "subnet1", "addressPrefix": "10.2.0.0/24" },
-                        { "name": "subnet2", "addressPrefix": "10.2.1.0/24" }
+                        { "name": "subnet1", "addressPrefix": "10.243.32.96/27" },
+                        { "name": "subnet2", "addressPrefix": "10.243.32.96/27" }
                     ]
                 }
             ],
