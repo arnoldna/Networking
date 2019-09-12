@@ -23,18 +23,6 @@
                 { "addressPrefix": "10.101.1.0/24", "name": "Hub-vnet-subnet1" }
             ]
         },
-        "onprem": {
-            "resourceGroup": "VDC-OnPrem",
-            "vnet": {
-                "name": "OnPrem-vnet",
-                "addressPrefixes": [  "10.102.0.0/16" ]
-            },
-            "subnets": [ 
-                { "addressPrefix": "10.102.0.0/24", "name": "GatewaySubnet" },
-                { "addressPrefix": "10.102.1.0/24", "name": "OnPrem-vnet-subnet1" },
-                { "addressPrefix": "10.102.2.0/24", "name": "OnPrem-vnet-subnet2" }
-            ]
-        },
         "spokes": [
             {
                 "resourceGroup": "TD-Prod",
