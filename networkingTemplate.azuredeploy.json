@@ -25,7 +25,7 @@
             "defaultValue": [
                 {
                     "resourceGroup": "Prod-Network",
-                    "location": "uswest2",
+                    "location": "westus2",
                     "vnet": { "name": "spoke1", "addressPrefixes": [ "10.1.0.0/16"  ] },
                     "subnets": [
                         { "name": "subnet1", "addressPrefix": "10.1.32.64/27" },
@@ -34,7 +34,7 @@
                 },
                 {
                     "resourceGroup": "Prod-Network",
-                    "location": "uscentral",
+                    "location": "centralus",
                     "vnet": { "name": "spoke2", "addressPrefixes": [ "10.2.0.0/16" ] },
                     "subnets": [
                         { "name": "subnet1", "addressPrefix": "10.2.0.0/27" },
