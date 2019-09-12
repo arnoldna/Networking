@@ -17,7 +17,7 @@
                 "gatewaySku": "Basic"
             },
             "metadata": { 
-                "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
+                "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3."
             }
         },
         "spokes": {
