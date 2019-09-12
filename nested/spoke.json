@@ -91,7 +91,7 @@
                 "allowGatewayTransit": false,
                 "useRemoteGateways": false,
                 "remoteVirtualNetwork": {
-                    "id": "[variables('hubID')]"
+                    "id": "[reference(variables('hubID'))]"
                 }
             }
         },
@@ -139,7 +139,7 @@
         },
         "hubID": {
             "type": "string",
-            "value": "[variables('hubID')]"
+            "value": "[reference(variables('hubID'))]"
         },
         "spokeID": {
             "type": "string",
