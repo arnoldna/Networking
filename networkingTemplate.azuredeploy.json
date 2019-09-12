@@ -2,102 +2,123 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "createVPNGateway": {
-            "defaultValue": true,
-            "type": "bool",
+        "hub": {
+            "type": "object",
+            "defaultValue": {
+                "resourceGroup": "core",
+                "vnet": { "name": "core", "addressPrefixes": [ "10.0.0.0/16" ] },
+                "subnets": [
+                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
+                    { "name": "subnet1", "addressPrefix": "10.0.1.0/24" },
+                    { "name": "subnet2", "addressPrefix": "10.0.2.0/24" },
+                    { "name": "subnet3", "addressPrefix": "10.0.3.0/24" }
+                ],
+                "createGateway": false,
+                "gatewaySku": "Basic"
+            },
+            "metadata": { 
+                "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
+            }
+        },
+        "spokes": {
+            "type": "array",
+            "defaultValue": [
+                {
+                    "resourceGroup": "Prod-Network",
+                    "vnet": { "name": "spoke1", "addressPrefixes": [ "10.1.0.0/16"  ] },
+                    "subnets": [
+                        { "name": "subnet1", "addressPrefix": "10.1.0.0/24" },
+                        { "name": "subnet2", "addressPrefix": "10.1.1.0/24" }
+                    ]
+                },
+                {
+                    "resourceGroup": "Prod-Network",
+                    "vnet": { "name": "spoke2", "addressPrefixes": [ "10.2.0.0/16" ] },
+                    "subnets": [
+                        { "name": "subnet1", "addressPrefix": "10.2.0.0/24" },
+                        { "name": "subnet2", "addressPrefix": "10.2.1.0/24" }
+                    ]
+                }
+            ],
             "metadata": {
-                "description": "Controls whether VPN gateways will be deployed"
+                "description": "Array of spoke objects. See defaultValue for example."
             }
         }
     },
     "variables": {
-        "vnetUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/hub.json",
-        "spokeUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/spoke.json",
-        "hub": {
-            "resourceGroup": "TD-Network",
-            "vnet": {
-                "name": "Hub-vnet",
-                "addressPrefixes": [  "10.101.0.0/16" ]
-            },
-            "subnets": [ 
-                { "addressPrefix": "10.101.1.0/24", "name": "Hub-vnet-subnet1" }
-            ]
-        },
-        "spokes": [
-            {
-                "resourceGroup": "TD-Prod",
-                "vnet": {
-                    "name": "Spoke1-vnet",
-                    "addressPrefixes": [  "10.1.0.0/16" ]
-                },
-                "subnets": [ 
-                    { "addressPrefix": "10.1.1.0/24", "name": "Spoke1-vnet-subnet1" },
-                    { "addressPrefix": "10.1.2.0/24", "name": "Spoke1-vnet-subnet2" }
-                ]
-            },
-            {
-                "resourceGroup": "TD-Prod",
-                "vnet": {
-                    "name": "Spoke2-vnet",
-                    "addressPrefixes": [  "10.2.0.0/16" ]
-                },
-                "subnets": [
-                    { "addressPrefix": "10.2.1.0/24", "name": "Spoke2-vnet-subnet1" },
-                    { "addressPrefix": "10.2.2.0/24", "name": "Spoke2-vnet-subnet2" }
-                ]
-            }
-        ]
+        "hubUrl": "[uri(deployment().properties.templateLink.uri, 'hub.json')]",
+        "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'spoke.json')]",
+        "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnet.name)]"
     },
     "resources": [
         {
-            "comments": "Create Hub vNet",
-            "name": "Deploy-Hub-vNet",
+            "name": "[variables('hubDeploymentName')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[variables('hub').resourceGroup]",
+            "resourceGroup": "[parameters('hub').resourceGroup]",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vnetUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
                 "parameters": {
-                    "vnet": {
-                        "value": "[variables('hub')]"
+                    "vnetName": {
+                        "value": "[parameters('hub').vnet.name]"
+                    },
+                    "vNetAddressPrefixes": {
+                        "value": "[parameters('hub').vnet.addressPrefixes]"
+                    },
+                    "subnets": {
+                        "value": "[parameters('hub').subnets]"
+                    },
+                    "createGateway": {
+                        "value": "[parameters('hub').createGateway]"
+                    },
+                    "gatewaySku": {
+                        "value": "[parameters('hub').gatewaySku]"
                     }
+                },
+                "templateLink": {
+                    "uri": "[variables('hubUrl')]",
+                    "contentVersion": "1.0.0.0"
                 }
             }
         },
         {
-            "comments": "Serially loop through spokes array and deploy vNet and two way vNet peer",
-            "name": "[concat('Deploy-Spoke', copyIndex(1), '-vNet')]",
+            "name": "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[variables('spokes')[copyIndex()].resourceGroup]",
+            "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
             "dependsOn": [
-                "Deploy-Hub-vNet"
+                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]"
             ],
             "copy": {
-                "name": "spokes",
-                "count": "[length(variables('spokes'))]",
+                "name": "spokecopy",
+                "count": "[length(parameters('spokes'))]",
                 "mode": "Serial",
                 "batchSize": 1
             },
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('spokeUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
                 "parameters": {
-                    "hub": {
-                        "value": "[variables('hub')]"
-                    },
-                    "spoke": {
-                        "value": "[variables('spokes')[copyIndex()]]"
-                    }
+                "peer": {
+                    "value": true
+                },
+                "hub": {
+                    "value": "[parameters('hub')]"
+                },
+                "spoke": {
+                    "value": "[parameters('spokes')[copyIndex()]]"
+                }
+                },
+                "templateLink": {
+                "uri": "[variables('spokeUrl')]",
+                "contentVersion": "1.0.0.0"
                 }
             }
+            }
+        ],
+        "outputs": {
+            "vpnGatewayPipId": {
+                "type": "string",
+                "value": "[reference(variables('hubDeploymentName')).outputs.gatewayPipId.value]"
+            }
         }
-    ]
 }
