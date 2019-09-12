@@ -6,7 +6,9 @@
             "type": "object",
             "defaultValue": [
                 {
-                    "vnet": {"name": "core", "resourceGroup": "TD-Network", "ID": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core"}
+                    "name": "core", 
+                    "resourceGroup": "TD-Network", 
+                    "ID": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core"
                 }
             ]
         },
