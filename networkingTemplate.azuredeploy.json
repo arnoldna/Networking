@@ -88,6 +88,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
+            "location":"[parameters('spokes')[copyIndex()].location]",
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]"
             ],
