@@ -11,8 +11,8 @@
         }
     },
     "variables": {
-        "vnetUri": "https://raw.githubusercontent.com/richeney/arm/master/nestedTemplates/vnet-hub.json",
-        "spokeUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/spoke.json?token=ACTEYPI3RVD3NQK7YFTOLMS5PJTVY",
+        "vnetUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/hub.json",
+        "spokeUri": "https://raw.githubusercontent.com/arnoldna/Networking/master/nested/spoke.json",
         "hub": {
             "resourceGroup": "TD-Network",
             "vnet": {
@@ -64,25 +64,6 @@
                 "parameters": {
                     "vnet": {
                         "value": "[variables('hub')]"
-                    }
-                }
-            }
-        },
-        {
-            "comments": "Create OnPrem vNet",
-            "name": "Deploy-OnPrem-vNet",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "resourceGroup": "[variables('onprem').resourceGroup]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vnetUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vnet": {
-                        "value": "[variables('onprem')]"
                     }
                 }
             }
