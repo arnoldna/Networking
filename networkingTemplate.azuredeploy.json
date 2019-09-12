@@ -7,6 +7,7 @@
             "defaultValue": {
                 "resourceGroup": "TD-Network",
                 "vnet": { "name": "core", "addressPrefixes": [ "10.0.0.0/16" ] },
+                "vnetResourceId": "/subscriptions/5a20a144-3ba4-4bb1-8a41-38ae47cf0772/resourceGroups/TD-Network/providers/Microsoft.Network/virtualNetworks/core",
                 "subnets": [
                     { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
                     { "name": "subnet1", "addressPrefix": "10.0.1.0/24" },
@@ -48,7 +49,8 @@
     "variables": {
 
         "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'nested/spoke.json')]",
-        "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnet.name)]"
+        "hubDeploymentNameOrignal": "[concat('deployHub-', parameters('hub').vnet.name)]",
+        "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnetResourceId)]"
     },
     "resources": [
         {
