@@ -24,7 +24,8 @@
             "defaultValue": {
             "vnet": {
                 "name": "Spoke",
-                "addressPrefixes": [ "10.99.0.0/16" ]
+                "addressPrefixes": [ "10.99.0.0/16" ],
+                "location": "westus2"
             },
             "subnets": [
                 { "name": "subnet1", "addressPrefix": "10.99.0.0/24" },
