@@ -53,11 +53,41 @@
         }
     },
     "variables": {
-
+        "hubUrl": "[uri(deployment().properties.templateLink.uri, 'nested/hub.json')]",
         "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'nested/spoke.json')]",
         "hubDeploymentName": "[parameters('hub').vnetResourceId]"
     },
     "resources": [
+        {
+            "name": "[variables('hubDeploymentName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('hub').resourceGroup]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "vnetName": {
+                        "value": "[parameters('hub').vnet.name]"
+                    },
+                    "vNetAddressPrefixes": {
+                        "value": "[parameters('hub').vnet.addressPrefixes]"
+                    },
+                    "subnets": {
+                        "value": "[parameters('hub').subnets]"
+                    },
+                    "createGateway": {
+                        "value": "[parameters('hub').createGateway]"
+                    },
+                    "gatewaySku": {
+                        "value": "[parameters('hub').gatewaySku]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[variables('hubUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
         {
             "name": "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]",
             "type": "Microsoft.Resources/deployments",
